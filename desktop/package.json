@@ -1,0 +1,72 @@
+{
+  "name": "ffmpeger-desktop",
+  "version": "0.0.3",
+  "main": "dist/main.js",
+  "author": "mankong.zhao@aax.com",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
+    "lodash": "^4.17.21",
+    "node-fetch": "^3.2.10",
+    "stylus": "^0.59.0",
+    "uuid": "^8.3.2",
+    "vue": "^3.2.37"
+  },
+  "build": {
+    "appId": "YourAppID",
+    "asar": true,
+    "directories": {
+      "buildResources": "assets",
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist"
+    ],
+    "mac": {
+      "artifactName": "${productName}_${version}.${ext}",
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}_${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    }
+  },
+  "scripts": {
+    "dev:start": "ENV_NAME=dev electron .",
+    "dev:renderer": "ENV_NAME=dev parcel serve src/index.pug",
+    "build:renderer": "parcel build src/index.pug --public-url ./",
+    "dev:main": "ENV_NAME=dev tsc src/main.ts --outDir dist/",
+    "app:build": "parcel build src/index.pug  --public-url ./ && tsc src/main.ts --outDir dist/ && electron-builder",
+    "app:preview": "ENV_NAME=dev tsc src/main.ts --outDir dist/ && electron ."
+  },
+  "devDependencies": {
+    "electron": "^20.1.0",
+    "@parcel/transformer-pug": "2.7.0",
+    "@parcel/transformer-vue": "2.7.0",
+    "@types/lodash": "^4.14.184",
+    "console-browserify": "^1.2.0",
+    "parcel": "^2.7.0",
+    "path-browserify": "^1.0.1",
+    "electron-builder": "^23.1.0"
+  },
+  "targets": {
+    "main": false
+  }
+}

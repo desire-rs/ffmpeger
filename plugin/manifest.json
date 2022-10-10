@@ -1,0 +1,46 @@
+{
+  "name": "ffmpeger",
+  "description": "chrome plugin for ffmpeger",
+  "version": "1.0",
+  "manifest_version": 3,
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "activeTab",
+    "webRequest",
+    "downloads"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/icon.png",
+      "32": "/images/icon.png",
+      "48": "/images/icon.png",
+      "128": "/images/icon.png"
+    }
+  },
+  "icons": {
+    "16": "/images/icon.png",
+    "32": "/images/icon.png",
+    "48": "/images/icon.png",
+    "128": "/images/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content-script.js"
+      ]
+    }
+  ]
+}

@@ -5,9 +5,9 @@
   "author": "Mankong.Zhao <mankong.zhao@aax.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel serve web/index.pug --public-url ./assets",
-    "dev2": "parcel serve web/index.pug",
-    "build": "parcel build web/index.pug --public-url ./assets",
+    "dev": "parcel serve src/index.pug --public-url ./assets",
+    "dev2": "parcel serve src/index.pug",
+    "build": "parcel build src/index.pug --public-url ./assets",
     "start": "cargo run",
     "up": "pm2 start target/release/ffmpger -- ffmpger",
     "down": "pm2 delete ffmpger"
