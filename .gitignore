@@ -1,0 +1,7 @@
+/target
+/dist
+/node_modules
+/env
+/.parcel-cache
+/db
+/mankong
