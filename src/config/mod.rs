@@ -1,3 +1,9 @@
 use once_cell::sync::Lazy;
 use std::env;
-pub const ADDR: Lazy<String> = Lazy::new(|| env::var("ADDR").expect("ADDR is required"));
+pub static ENV_NAME: Lazy<String> =
+  Lazy::new(|| env::var("ENV_NAME").expect("ENV_NAME must be set"));
+pub static DATABASE_URI: Lazy<String> =
+  Lazy::new(|| env::var("DATABASE_URI").expect("DATABASE_URI must be set"));
+pub static REDIS_URI: Lazy<String> =
+  Lazy::new(|| env::var("REDIS_URI").expect("REDIS_URI must be set"));
+pub static ADDR: Lazy<String> = Lazy::new(|| env::var("ADDR").expect("ADDR must be set"));
