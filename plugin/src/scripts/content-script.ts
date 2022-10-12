@@ -7,6 +7,10 @@ async function sentMessage(data) {
   })
 }
 
+async function handle(msg) {
+
+}
+
 chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(async (msg) => {
     console.log("receive message:", msg);
