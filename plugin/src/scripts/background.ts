@@ -1,7 +1,7 @@
 interface IMessage {
   api: string;
   method: string;
-  data?: string;
+  data?: Object;
 }
 const DEFAULT_BASE_URL = 'http://0.0.0.0:12306';
 chrome.webRequest.onResponseStarted.addListener(async (details) => {

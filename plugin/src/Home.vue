@@ -6,16 +6,17 @@
   .content
     .item(v-for="(url, index) in urls")
       input(type="checkbox"  v-model="targets" :value="url")
+      label {{title-index}}
       label {{url}}
-    textarea(cols='30' rows='5' v-model="info")
-    textarea(cols='30' rows='4' style='color:red;' v-model="result")
+    textarea(cols='30' rows='5' v-model="info" style='color:red;')
+    //- textarea(cols='30' rows='4' style='color:red;' v-model="result")
 </template>
 
 <script lang="ts">
 export default {
   data() {
     return {
-      title: "title", // title
+      title: "", // title
       urls: [], // 捕获的urls
       targets: [], // 选中的urls
       info: "{}", // 日志信息
@@ -31,12 +32,15 @@ export default {
       console.log(m3u8);
       if (!!m3u8) {
         this.urls = JSON.parse(m3u8);
+        this.targets = this.urls;
       }
     },
     async clear() {
       const result = confirm("确定清空内容?");
       if (result) {
         await chrome.storage.local.clear();
+        this.urls = [];
+        this.targets = [];
       }
     },
     async sendToContent(params) {
@@ -59,9 +63,12 @@ export default {
     },
     async submit() {
       for (const m3u8 of this.targets) {
-        const data = { url: m3u8, title: this.title };
+        const data = { url: m3u8 };
         await this.sendToContent(data);
       }
+      await chrome.storage.local.clear();
+      this.urls = [];
+      this.targets = [];
     },
   },
 };
@@ -89,11 +96,7 @@ textarea
   border-radius: 4px;
   padding: 5px;
   outline: none;
-label
-  color: #000;
-  background-color: #ccc;
-  margin: 2px 0;
-  width: 710px;
+
 button
   cursor: pointer;
   padding: 8px 18px;
@@ -103,4 +106,11 @@ button
   color: white;
   margin: 0 5px;;
   background-color: cornflowerblue;
+.item
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  justify-content:flex-start;
+  algin-items: center;
+  line-height: 30px;
 </style>
