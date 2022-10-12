@@ -6,6 +6,14 @@ interface IMessage {
 const DEFAULT_BASE_URL = 'http://0.0.0.0:12306';
 chrome.webRequest.onResponseStarted.addListener(async (details) => {
   const { method, url, initiator, tabId, requestId, frameId } = details;
+  if (initiator) {
+    if (['https://creative.superchat.live', 'https://141jj.com'].includes(initiator)) {
+      return true;
+    }
+  }
+  if (isMatch(url, 'b-hls')) {
+    return true;
+  }
   if (method === 'GET' && isMatch(url, '.m3u8')) {
     console.log(url, initiator);
     let { m3u8 } = await chrome.storage.local.get('m3u8');
