@@ -32,30 +32,30 @@ function isMatch(url, target) {
   return url.indexOf(target) > -1;
 }
 
-chrome.runtime.onMessage.addListener(async (message: IMessage, sender, sendResponse) => {
-  let { baseUrl } = await chrome.storage.local.get('baseUrl');
-  let { method, api, data } = message;
-  let result;
-  const url = `${baseUrl ? baseUrl : DEFAULT_BASE_URL}/${api}`;
-  if (method.toUpperCase() === 'GET') {
-    result = await fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-    });
-  } else if (method.toUpperCase() === 'POST') {
-    result = await fetch(url, {
-      method: method,
-      body: JSON.stringify(data),
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8'
-      },
-    });
-  }
-  const body = await result.json();
-  console.log('fetch api result', body);
+chrome.runtime.onMessage.addListener((message: IMessage, sender, sendResponse) => {
   setTimeout(async () => {
+    let { baseUrl } = await chrome.storage.local.get('baseUrl');
+    let { method, api, data } = message;
+    let result;
+    const url = `${baseUrl ? baseUrl : DEFAULT_BASE_URL}${api}`;
+    if (method.toUpperCase() === 'GET') {
+      result = await fetch(url, {
+        method: method,
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+      });
+    } else if (method.toUpperCase() === 'POST') {
+      result = await fetch(url, {
+        method: method,
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8'
+        },
+      });
+    }
+    const body = await result.json();
+    console.log('fetch api result', body);
     sendResponse(body);
   }, 200);
   return true;

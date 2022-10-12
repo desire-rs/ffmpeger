@@ -4,7 +4,7 @@ interface IMessage {
   data?: Object | undefined;
 }
 interface IMsg {
-  url: string;
+  m3u8: string;
 }
 async function sentMessage(data: IMessage) {
   return new Promise((resolve, reject) => {
@@ -15,13 +15,16 @@ async function sentMessage(data: IMessage) {
 }
 
 async function handle(msg: IMsg) {
-  const { storage_path = '/Users/mankong/Downloads/' } = await chrome.storage.local.get('storage_path');
+  const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36 OPR/82.0.4227.58';
+
+  const { storagePath = '/Users/mankong/Downloads' } = await chrome.storage.local.get('storagePath');
   const title = document.querySelector('title')?.text;
-  const { url } = msg;
+  const { m3u8 } = msg;
   const data = {
-    url,
+    userAgent,
+    url: m3u8,
     title,
-    storage_path: `${storage_path}/${title}.mp4`
+    storagePath: `${storagePath}/${title}.mp4`
   }
   const message: IMessage = {
     api: '/m3u8',

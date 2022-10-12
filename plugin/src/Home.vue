@@ -8,7 +8,7 @@
       input(type="checkbox"  v-model="targets" :value="url")
       label {{title-index}}
       label {{url}}
-    textarea(cols='30' rows='5' v-model="info" style='color:red;')
+    textarea(cols='30' rows='25' v-model="info" style='color:red;')
     //- textarea(cols='30' rows='4' style='color:red;' v-model="result")
 </template>
 
@@ -63,7 +63,7 @@ export default {
     },
     async submit() {
       for (const m3u8 of this.targets) {
-        const data = { url: m3u8 };
+        const data = { m3u8 };
         await this.sendToContent(data);
       }
       await chrome.storage.local.clear();
