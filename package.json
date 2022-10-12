@@ -1,0 +1,24 @@
+{
+  "name": "ffmpeger",
+  "version": "1.0.0",
+  "description": "## web > 管理界面",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/desire-rs/ffmpeger.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/desire-rs/ffmpeger/issues"
+  },
+  "homepage": "https://github.com/desire-rs/ffmpeger#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.197",
+    "@types/node": "^18.8.4"
+  }
+}

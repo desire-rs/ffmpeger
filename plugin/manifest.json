@@ -14,12 +14,12 @@
   "host_permissions": [
     "<all_urls>"
   ],
-  "options_page": "options.html",
   "background": {
     "service_worker": "background.js"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_title": "ffmpeger",
+    "default_popup": "index.html",
     "default_icon": {
       "16": "/images/icon.png",
       "32": "/images/icon.png",
