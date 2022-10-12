@@ -1,10 +1,11 @@
-use crate::utils::now_option;
+use crate::utils::{now_option, gen_uuid};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 #[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct Task {
+  #[serde(default = "gen_uuid")]
   pub id: Uuid,
   pub title: String,
   pub url: String,
