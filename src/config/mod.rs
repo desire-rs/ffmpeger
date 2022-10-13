@@ -10,3 +10,5 @@ pub static ADDR: Lazy<String> = Lazy::new(|| env::var("ADDR").expect("ADDR must 
 
 pub const TASK_HASH: &'static str = "FFMPEGER_TASK_HASH";
 pub const TASK_LIMIT: i64 = 4;
+pub const CACHE_REPORT: bool = false;
+pub const CACHE_REPORT_HASH: &'static str = "FFMPEGER_REPORT_HASH";

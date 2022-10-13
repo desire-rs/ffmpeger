@@ -1,4 +1,4 @@
-use crate::config::TASK_HASH;
+use crate::config::{CACHE_REPORT, CACHE_REPORT_HASH, TASK_HASH};
 use crate::libs::get_redis_client;
 use crate::schema::task_schema::{Task, TaskReport};
 use crate::types::AnyResult;
@@ -52,6 +52,14 @@ pub async fn m3u8(payload: Task) -> AnyResult<TaskReport> {
   let mut report: TaskReport =
     TaskReport::new(payload.id, payload.title, payload.url, payload.storage_path);
   report.status = Some(result);
-
+  if CACHE_REPORT {
+    redis
+      .hset_nx(
+        CACHE_REPORT_HASH,
+        &report.title,
+        serde_json::to_string(&report)?,
+      )
+      .await?;
+  }
   Ok(report)
 }
