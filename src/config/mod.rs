@@ -7,3 +7,6 @@ pub static DATABASE_URI: Lazy<String> =
 pub static REDIS_URI: Lazy<String> =
   Lazy::new(|| env::var("REDIS_URI").expect("REDIS_URI must be set"));
 pub static ADDR: Lazy<String> = Lazy::new(|| env::var("ADDR").expect("ADDR must be set"));
+
+pub const TASK_HASH: &'static str = "FFMPEGER_TASK_HASH";
+pub const TASK_LIMIT: i64 = 4;

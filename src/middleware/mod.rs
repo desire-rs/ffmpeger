@@ -1,9 +1,7 @@
 use crate::libs::{get_pool, get_redis_client};
-use crate::types::Tasks;
 use desire::Middleware;
 use desire::Request;
 use desire::Result;
-use std::sync::{Arc, Mutex};
 use std::time::Instant;
 pub struct Logger;
 
@@ -31,10 +29,8 @@ impl Middleware for DB {
   async fn handle(&self, mut req: Request, next: desire::Next<'_>) -> Result {
     let pool = get_pool().await?;
     let client = get_redis_client().await?;
-    let tasks: Tasks = Arc::new(Mutex::new(Vec::new()));
     req.inner.extensions_mut().insert(pool);
     req.inner.extensions_mut().insert(client);
-    req.inner.extensions_mut().insert(tasks);
     next.run(req).await
   }
 }

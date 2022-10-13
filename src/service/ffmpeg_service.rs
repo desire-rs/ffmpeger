@@ -1,9 +1,14 @@
+use crate::config::TASK_HASH;
+use crate::libs::get_redis_client;
 use crate::schema::task_schema::{Task, TaskReport};
 use crate::types::AnyResult;
+use redis::AsyncCommands;
 use std::process::Stdio;
 use tokio::io::{AsyncBufReadExt, BufReader};
 use tokio::process::Command;
 pub async fn m3u8(payload: Task) -> AnyResult<TaskReport> {
+  let client = get_redis_client().await?;
+  let mut redis = client.get_async_connection().await?;
   let mut args: Vec<&str> = Vec::new();
   if let Some(user_agent) = &payload.user_agent {
     args.push("-user_agent");
@@ -43,6 +48,7 @@ pub async fn m3u8(payload: Task) -> AnyResult<TaskReport> {
   let success = result.success();
   let result = format!("result {:?} success {}", result, success);
   println!("result: {}", result);
+  redis.hdel(TASK_HASH, &payload.id.to_string()).await?;
   let mut report: TaskReport =
     TaskReport::new(payload.id, payload.title, payload.url, payload.storage_path);
   report.status = Some(result);

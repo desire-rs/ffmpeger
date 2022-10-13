@@ -1,12 +1,9 @@
 use crate::Error;
 use desire::IntoResponse;
 use desire::Response;
-use std::sync::{Arc, Mutex};
-use crate::schema::task_schema::Task;
 pub type AnyResult<T> = anyhow::Result<T, anyhow::Error>;
 pub type ApiResult<T> = std::result::Result<Resp<T>, Error>;
 pub type ApiPageResult<T> = std::result::Result<Resp<PageData<T>>, Error>;
-pub type Tasks = Arc<Mutex<Vec<Task>>>;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Resp<T = String> {
@@ -44,7 +41,7 @@ where
   T: Serialize + Send,
 {
   pub list: Vec<T>,
-  pub total: u64,
+  pub total: usize,
 }
 
 impl<T> PageData<T>
@@ -52,7 +49,7 @@ where
   T: Serialize + Send,
 {
   #[allow(dead_code)]
-  pub fn new(list: Vec<T>, total: u64) -> Self {
+  pub fn new(list: Vec<T>, total: usize) -> Self {
     PageData { list, total }
   }
 }
