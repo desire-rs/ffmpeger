@@ -15,6 +15,6 @@ pub fn default_routes() -> desire::Router {
   router.post("/m3u8", ffmpeg_controller::m3u8);
   router.get("/task", ffmpeg_controller::task);
   router.post("/clear", ffmpeg_controller::clear);
-  router.delete("/task/:id", ffmpeg_controller::remove_task);
+  router.delete("/task/:id", ffmpeg_controller::remove);
   router
 }

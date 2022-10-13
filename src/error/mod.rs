@@ -6,6 +6,8 @@ pub enum Error {
   AnyError(#[from] anyhow::Error),
   #[error("Desire::Error")]
   DesireError(#[from] desire::Error),
+  #[error("Desire::Error")]
+  UuidError(#[from] uuid::Error),
 }
 
 impl IntoResponse for Error {
