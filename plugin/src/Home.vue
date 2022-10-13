@@ -5,11 +5,9 @@
     button.btn(@click="clear") clear
   .content
     .item(v-for="(url, index) in urls")
-      input(type="checkbox"  v-model="targets" :value="url")
-      label {{title-index}}
-      label {{url}}
-    textarea(cols='30' rows='25' v-model="info" style='color:red;')
-    //- textarea(cols='30' rows='4' style='color:red;' v-model="result")
+      input.checkbox(type="checkbox"  v-model="targets" :value="url")
+      input.m3u8(type="text" :value="url")
+    textarea.info(v-if="info" v-model="info" style='color:red;')
 </template>
 
 <script lang="ts">
@@ -19,11 +17,9 @@ interface IMsg {
 export default {
   data() {
     return {
-      title: "", // title
       urls: [], // 捕获的urls
       targets: [], // 选中的urls
-      info: "{}", // 日志信息
-      result: "{}", // 结果信息
+      info: null, // 日志信息
     };
   },
   mounted() {
@@ -78,26 +74,38 @@ body
   margin: 0;
   padding: 0;
 .container
+  width: 710px;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  padding 5px;
+.control
+  height: 60px;
+  border-bottom: 1px solid #c6c6c6;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  algin-items: center;
+  margin-bottom: 20px;
 .content
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
 body
   margin: 0;
-  padding: 10px;
-textarea
+  padding: 0;
+textarea.info
   width: 700px;
   margin-top: 5px;
   border-radius: 4px;
   padding: 5px;
   outline: none;
-
+  min-height: 300px;
+  border: 1px solid #c6c6c6;
 button
   cursor: pointer;
   padding: 8px 18px;
+  height: 36px;
   border: none;
   border-radius: 4px;
   outline: none;
@@ -107,8 +115,16 @@ button
 .item
   display: flex;
   flex-direction: row;
-  height: 30px;
   justify-content:flex-start;
   algin-items: center;
-  line-height: 30px;
+input.checkbox
+  flex-basis: 16px;
+input.m3u8
+  margin: 5px 0;
+  flex-grow: 1;
+  height: 32px;
+  border-radius: 5px;
+  outline: none;
+  padding: 2px 5px;
+  border: 1px solid #c6c6c6;
 </style>
