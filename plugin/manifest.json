@@ -17,6 +17,7 @@
   "background": {
     "service_worker": "background.js"
   },
+  "options_page": "index.html#/options",
   "action": {
     "default_title": "ffmpeger",
     "default_popup": "index.html",

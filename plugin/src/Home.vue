@@ -38,7 +38,7 @@ export default {
     async clear() {
       const result = confirm("确定清空内容?");
       if (result) {
-        await chrome.storage.local.clear();
+        await chrome.storage.local.remove(["m3u8"]);
         this.urls = [];
         this.targets = [];
       }
@@ -66,7 +66,7 @@ export default {
         const data = { m3u8 };
         await this.sendToContent(data);
       }
-      await chrome.storage.local.clear();
+      await chrome.storage.local.remove(["m3u8"]);
       this.urls = [];
       this.targets = [];
     },
