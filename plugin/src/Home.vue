@@ -13,6 +13,9 @@
 </template>
 
 <script lang="ts">
+interface IMsg {
+  m3u8s: string[];
+}
 export default {
   data() {
     return {
@@ -43,13 +46,11 @@ export default {
         this.targets = [];
       }
     },
-    async sendToContent(params) {
+    async sendToContent(params: IMsg) {
       let [tab] = await chrome.tabs.query({
         active: true,
         currentWindow: true,
       });
-      params.url = tab.url;
-      params.title = tab.title;
       if (tab && tab.id) {
         const port = chrome.tabs.connect(tab.id, {
           name: "ffmpeger",
@@ -62,10 +63,7 @@ export default {
       }
     },
     async submit() {
-      for (const m3u8 of this.targets) {
-        const data = { m3u8 };
-        await this.sendToContent(data);
-      }
+      await this.sendToContent({ m3u8s: this.targets });
       await chrome.storage.local.remove(["m3u8"]);
       this.urls = [];
       this.targets = [];

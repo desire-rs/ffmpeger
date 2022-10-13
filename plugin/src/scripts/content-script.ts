@@ -4,7 +4,7 @@ interface IMessage {
   data?: Object | undefined;
 }
 interface IMsg {
-  m3u8: string;
+  m3u8s: string[];
 }
 async function sentMessage(data: IMessage) {
   return new Promise((resolve, reject) => {
@@ -19,28 +19,33 @@ async function handle(msg: IMsg) {
   const referer = window.location.origin + '/';
   const { storagePath = '/Users/mankong/Downloads' } = await chrome.storage.local.get('storagePath');
   let title = document.title;
-  const { m3u8 } = msg;
-  const headers = `Host: ${new URL(m3u8).host}`
-  const cmd = `ffmpeg -user_agent "${userAgent}" -referer "${referer}" -i "${m3u8}" -c copy "${title}.mp4"`
+  const { m3u8s } = msg;
+  let index = 0;
   title = title?.replace('- 成人線上直播一區 - 5278 / 5278論壇 / 我愛78論壇', '');
   title = title?.replace(' - Jable.TV | 免費高清AV在線看 | J片 AV看到飽', '');
   title = title?.replace(' - 泥巴影院 - 海外华人在线视频媒体平台，在线观看高清视频', '').replace('/', '');
   title = title?.trim();
-  console.log(cmd);
-  const data = {
-    userAgent,
-    cmd,
-    url: m3u8,
-    title,
-    storagePath: `${storagePath}/${title}.mp4`
+  const results: any = [];
+  for (const m3u8 of m3u8s) {
+    const cmd = `ffmpeg -user_agent "${userAgent}" -referer "${referer}" -i "${m3u8}" -c copy "${title}.mp4"`
+    console.log(cmd);
+    const data = {
+      userAgent,
+      cmd,
+      url: m3u8,
+      title: index > 0 ? `${title}-${index}` : title,
+      storagePath: index > 0 ? `${storagePath}/${title}-${index}.mp4` : `${storagePath}/${title}.mp4`
+    }
+    const message: IMessage = {
+      api: '/m3u8',
+      method: 'POST',
+      data,
+    }
+    const result = await sentMessage(message);
+    results.push(result);
+    index += 1;
   }
-  const message: IMessage = {
-    api: '/m3u8',
-    method: 'POST',
-    data,
-  }
-  const result = await sentMessage(message);
-  return result;
+  return results;
 }
 chrome.runtime.onConnect.addListener((port) => {
   port.onMessage.addListener(async (msg: IMsg) => {
