@@ -63,7 +63,7 @@ pub async fn m3u8(payload: Task) -> AnyResult<TaskReport> {
       .await?;
   }
   if SLACK_REPORT {
-    slack_service::send_message(serde_json::to_string(&report)?).await?;
+    slack_service::send_message(&serde_json::to_string(&report)?).await?;
   }
   Ok(report)
 }

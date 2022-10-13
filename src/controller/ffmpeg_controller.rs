@@ -2,6 +2,7 @@ use crate::config::{TASK_HASH, TASK_LIMIT};
 use crate::error::option_error;
 use crate::schema::task_schema::Task;
 use crate::service::ffmpeg_service;
+use crate::service::slack_service;
 use crate::ApiPageResult;
 use crate::ApiResult;
 use crate::PageData;
@@ -72,6 +73,7 @@ pub async fn clear(req: Request) -> ApiResult<String> {
     .get::<redis::Client>()
     .ok_or(option_error("redis"))?;
   let mut redis = client.get_async_connection().await?;
+  slack_service::send_message("ffmpeger clear tasks").await?;
   redis.del(TASK_HASH).await?;
   Ok(Resp::data("OK".to_string()))
 }
