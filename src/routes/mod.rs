@@ -13,5 +13,8 @@ pub fn default_routes() -> desire::Router {
   router.get("/liveness", default_controller::liveness);
   router.get("/hello", default_controller::hello);
   router.post("/m3u8", ffmpeg_controller::m3u8);
+  router.get("/task", ffmpeg_controller::task);
+  router.post("/clear", ffmpeg_controller::clear);
+  router.delete("/task/:id", ffmpeg_controller::remove_task);
   router
 }

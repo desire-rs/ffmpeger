@@ -1,9 +1,12 @@
 use crate::Error;
 use desire::IntoResponse;
 use desire::Response;
+use std::sync::{Arc, Mutex};
+use crate::schema::task_schema::Task;
 pub type AnyResult<T> = anyhow::Result<T, anyhow::Error>;
 pub type ApiResult<T> = std::result::Result<Resp<T>, Error>;
-
+pub type ApiPageResult<T> = std::result::Result<Resp<PageData<T>>, Error>;
+pub type Tasks = Arc<Mutex<Vec<Task>>>;
 use serde::{Deserialize, Serialize};
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Resp<T = String> {

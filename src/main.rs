@@ -16,9 +16,11 @@ use tracing::Level;
 use tracing_subscriber::FmtSubscriber;
 
 use config::{ADDR, ENV_NAME};
-use types::ApiResult;
-use types::Resp;
 use error::Error;
+use types::ApiPageResult;
+use types::ApiResult;
+use types::PageData;
+use types::Resp;
 #[tokio::main]
 async fn main() -> types::AnyResult<()> {
   let subscriber = FmtSubscriber::builder()
