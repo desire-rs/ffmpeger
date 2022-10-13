@@ -1,4 +1,5 @@
-use crate::config::{CACHE_REPORT, CACHE_REPORT_HASH, TASK_HASH};
+use super::slack_service;
+use crate::config::{CACHE_REPORT, CACHE_REPORT_HASH, SLACK_REPORT, TASK_HASH};
 use crate::libs::get_redis_client;
 use crate::schema::task_schema::{Task, TaskReport};
 use crate::types::AnyResult;
@@ -60,6 +61,9 @@ pub async fn m3u8(payload: Task) -> AnyResult<TaskReport> {
         serde_json::to_string(&report)?,
       )
       .await?;
+  }
+  if SLACK_REPORT {
+    slack_service::send_message(serde_json::to_string(&report)?).await?;
   }
   Ok(report)
 }

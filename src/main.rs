@@ -17,6 +17,7 @@ use tracing_subscriber::FmtSubscriber;
 
 use config::{ADDR, ENV_NAME};
 use error::Error;
+use types::AnyResult;
 use types::ApiPageResult;
 use types::ApiResult;
 use types::PageData;

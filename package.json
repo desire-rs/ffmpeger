@@ -4,7 +4,7 @@
   "description": "## web > 管理界面",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "up": "pm2 start target/release/ffmpeger -- ffmpeger"
   },
   "repository": {
     "type": "git",

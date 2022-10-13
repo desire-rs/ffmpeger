@@ -4,6 +4,8 @@
 </template>
 
 <script lang="ts">
+import * as axios from 'axios';
+axios.default.defaults.baseURL = window.location.hostname;
 export default {
   data() {
     return {
