@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import axios from "axios";
-axios.defaults.baseURL = window.location.href;
+axios.defaults.baseURL = window.location.origin;
 export default {
   data() {
     return {
@@ -31,9 +31,11 @@ export default {
     this.init();
   },
   methods: {
-    async init() {
-      const result = await axios.get("/task");
-      this.tasks = result.data.list;
+    init() {
+      setInterval(async () => {
+        const result = await axios.get("/task");
+        this.tasks = result.data.data.list;
+      }, 5000);
     },
   },
 };
