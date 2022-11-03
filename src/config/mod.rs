@@ -9,7 +9,7 @@ pub static REDIS_URI: Lazy<String> =
 pub static ADDR: Lazy<String> = Lazy::new(|| env::var("ADDR").expect("ADDR must be set"));
 
 pub const TASK_HASH: &'static str = "FFMPEGER_TASK_HASH";
-pub const TASK_LIMIT: i64 = 4;
+pub const TASK_LIMIT: i64 = 6;
 pub const CACHE_REPORT: bool = true;
 pub const SLACK_REPORT: bool = true;
 pub const CACHE_REPORT_HASH: &'static str = "FFMPEGER_REPORT_HASH";

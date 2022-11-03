@@ -20,6 +20,7 @@ pub async fn m3u8(mut req: Request) -> ApiResult<Task> {
   let mut redis = client.get_async_connection().await?;
   let len: i64 = redis.hlen(TASK_HASH).await?;
   if len > TASK_LIMIT {
+    info!("too many tasks");
     return Ok(Resp::data(task));
   }
   redis

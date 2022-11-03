@@ -3,17 +3,17 @@
   table
     thead
       tr
-        th id
+        //- th id
         th title
         th url
-        th status
+        //- th status
         th createdAt
     tbody
       tr(v-for="task in tasks")
-        td(v-text="task.id")
+        //- td(v-text="task.id")
         td(v-text="task.title")
         td(v-text="task.url")
-        td(v-text="task.status")
+        //- td(v-text="task.status")
         td(v-text="task.createdAt")
 
 </template>
@@ -42,8 +42,9 @@ export default {
 </script>
 
 <style lang="styl" scoped>
-.container
-  margin: 10px 0;
+html,body
+  margin: 0;
+  padding: 0;
 .container table
   width: 100%;
   border-collapse: collapse;
